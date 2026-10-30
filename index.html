@@ -13,6 +13,7 @@
 <body>
   <header class="topbar">
     <a class="brand" href="#inicio" aria-label="Ir al inicio"><span class="brand-mark">R</span><span>RED<span>LAB</span></span></a>
+    <nav class="page-tabs" aria-label="Secciones principales"><a class="active" href="index.html">Resumen</a><a href="test.html">Test</a></nav>
     <div class="progress-wrap" aria-label="Progreso de estudio">
       <span id="progressLabel">Fundamentos · 0%</span>
       <div class="progress"><span id="progressBar"></span></div>
@@ -74,6 +75,37 @@
             </div>
           </div>
         </div>
+      </article>
+
+      <article class="content-block layer-guide">
+        <div class="card-title"><span>01B</span><div><p>CAPA POR CAPA</p><h3>Qué ocurre y quién interviene</h3></div></div>
+        <div class="layer-table">
+          <div class="layer-head"><span>Capa</span><span>Qué hace</span><span>Protocolos / estándares</span><span>Unidad y equipo</span></div>
+          <div><b>7 · Aplicación</b><p>Da servicios de red al programa del usuario: web, correo, nombres y transferencia de archivos.</p><p>HTTP/HTTPS, DNS, SMTP, FTP, DHCP</p><small>DATOS · PC, servidor, gateway</small></div>
+          <div><b>6 · Presentación</b><p>Traduce formatos, cifra, descifra y comprime para que ambos extremos interpreten la información.</p><p>TLS/SSL, UTF‑8, JPEG, MPEG</p><small>DATOS · software del host</small></div>
+          <div><b>5 · Sesión</b><p>Inicia, mantiene y termina el diálogo; crea puntos de sincronización y permite reanudar sesiones.</p><p>RPC, NetBIOS y funciones de sesión</p><small>DATOS · software del host</small></div>
+          <div><b>4 · Transporte</b><p>Divide datos, usa puertos, controla orden y entrega extremo a extremo. TCP confirma y retransmite; UDP reduce sobrecarga.</p><p>TCP, UDP</p><small>SEGMENTO / DATAGRAMA · host, firewall</small></div>
+          <div><b>3 · Red</b><p>Agrega IP de origen y destino, decide rutas y permite atravesar redes distintas.</p><p>IPv4/IPv6, ICMP, IP</p><small>PAQUETE · router</small></div>
+          <div><b>2 · Enlace</b><p>Forma tramas, usa direcciones MAC, controla el acceso al medio y detecta errores del enlace local.</p><p>Ethernet 802.3, Wi‑Fi 802.11, PPP</p><small>TRAMA · switch, puente, tarjeta de red</small></div>
+          <div><b>1 · Física</b><p>Convierte los bits en impulsos eléctricos, luz o radio y define conectores, frecuencias y velocidad.</p><p>Cable UTP, fibra, radio; aspectos físicos 802.3/802.11</p><small>BITS · hub, repetidor, medio</small></div>
+        </div>
+        <div class="accuracy-note"><strong>Cómo leer esta tabla:</strong> OSI es un modelo conceptual. Algunos protocolos abarcan funciones de más de una capa; por ejemplo, TLS suele explicarse entre Aplicación y Presentación. La tabla los ubica donde su función resulta más fácil de estudiar.</div>
+      </article>
+
+      <article class="content-block journey-block" id="ejemplo-mensaje">
+        <div class="card-title"><span>01C</span><div><p>EJEMPLO PRÁCTICO</p><h3>¿Qué pasa cuando envías “Hola”?</h3></div></div>
+        <div class="scenario"><div><span>ORIGEN</span><b>Ana · 192.168.1.10</b><small>Wi‑Fi · MAC AA:10</small></div><i>→</i><div><span>RED</span><b>Switch/AP → Router → Internet</b><small>varios enlaces y saltos</small></div><i>→</i><div><span>DESTINO</span><b>Luis · servidor de mensajería</b><small>IP 203.0.113.20</small></div></div>
+        <ol class="journey-steps">
+          <li><span>7</span><div><b>Aplicación crea el dato</b><p>Ana escribe “Hola”. La app añade información propia: usuario destinatario, conversación y contenido. Si fuera una página web, aquí intervendría HTTP/HTTPS.</p></div></li>
+          <li><span>6–5</span><div><b>El dato se prepara y la sesión se mantiene</b><p>El texto se codifica, por ejemplo en UTF‑8; puede cifrarse con TLS y comprimirse. La sesión identifica el diálogo activo con el servicio.</p></div></li>
+          <li><span>4</span><div><b>Transporte agrega puertos</b><p>TCP crea un segmento con puerto origen temporal y puerto destino del servicio. Numera los bytes, espera confirmación y retransmite si algo se pierde. Una app en tiempo real podría elegir UDP.</p></div></li>
+          <li><span>3</span><div><b>Red agrega direcciones IP</b><p>IP crea un paquete con 192.168.1.10 como origen y la IP del servidor como destino. El host compara la red destino; como es externa, envía el paquete a su gateway.</p></div></li>
+          <li><span>2</span><div><b>Enlace crea la primera trama</b><p>Wi‑Fi encapsula el paquete usando direcciones MAC locales. La MAC destino es la del punto de acceso o gateway, no la MAC final de Luis.</p></div></li>
+          <li><span>1</span><div><b>Física transmite bits</b><p>La tarjeta convierte la trama en señales de radio. El punto de acceso las recibe y el switch mueve la trama hacia el router.</p></div></li>
+          <li><span>R</span><div><b>Cada router cambia la envoltura local</b><p>El router elimina la trama, examina la IP destino, elige el siguiente salto y crea una trama nueva. Las MAC cambian en cada enlace; las IP identifican los extremos durante el recorrido.</p></div></li>
+          <li><span>↑</span><div><b>El destino desencapsula</b><p>El servidor recibe bits → trama → paquete → segmento → datos, verifica cada cabecera y entrega “Hola” a la aplicación. La respuesta vuelve mediante el mismo proceso, aunque puede tomar otra ruta.</p></div></li>
+        </ol>
+        <div class="message-formula"><code>“Hola”</code><i>＋ TCP</i><i>＋ IP</i><i>＋ Wi‑Fi/Ethernet</i><i>→ bits</i></div>
       </article>
 
       <article class="content-block">
@@ -155,21 +187,11 @@
         <p class="eyebrow">RESUMEN COMPLETADO</p>
         <h2>¿Deseas generar un Test Aleatorio sobre todo el PDF o prefieres elegir un Tema Específico <small>(ej. Protocolos y Estándares, Topologías, Modelo OSI, Hardware)</small>?</h2>
         <div class="choice-row">
-          <button class="primary-button" data-choice="aleatorio">Test aleatorio <span>↗</span></button>
-          <button class="secondary-button" id="showTopics">Elegir tema <span>＋</span></button>
-        </div>
-        <div class="topic-picker" id="topicPicker" hidden>
-          <button data-choice="fundamentos">Telecomunicaciones y redes</button><button data-choice="aplicaciones">Aplicaciones y movilidad</button><button data-choice="sociales">Aspectos sociales y seguridad</button><button data-choice="clasificacion">Clasificación LAN, MAN y WAN</button><button data-choice="acceso_wan">Tecnologías WAN y acceso</button><button data-choice="interredes">Interredes e internetworking</button><button data-choice="topologias">Topologías y tipos de envío</button><button data-choice="modelos">Modelos OSI y TCP/IP</button><button data-choice="protocolos">Protocolos y estándares</button><button data-choice="encapsulamiento">Encapsulamiento</button><button data-choice="hardware">Hardware</button><button data-choice="servicios">Servicios CONS y CLNS</button>
+          <a class="primary-button" href="test.html?tema=aleatorio">Ir al test integral <span>↗</span></a>
+          <a class="secondary-button" href="test.html">Elegir tema <span>＋</span></a>
         </div>
         <p class="bank-note"><strong id="bankCount">—</strong> preguntas disponibles · El test integral genera 30 e incluye todos los bloques del PDF.</p>
       </div>
-    </section>
-
-    <section class="section test-section" id="evaluacion" hidden>
-      <div class="section-number">APARTADO 2</div>
-      <div class="test-header"><div><p class="eyebrow">MÓDULO DE TEST Y EVALUACIÓN</p><h2 id="testTitle">Test aleatorio</h2></div><div class="score-pill"><span id="answeredCount">0</span>/<span id="questionCount">0</span> respondidas</div></div>
-      <form id="quizForm" novalidate><div id="questions"></div><button class="primary-button submit-test" type="submit">Validar respuestas <span>→</span></button></form>
-      <div id="results" hidden></div>
     </section>
   </main>
 

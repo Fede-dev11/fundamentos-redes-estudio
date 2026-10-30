@@ -2,6 +2,8 @@
 
 Aplicación web de estudio basada en el documento **“Introducción — Fundamentos de Redes de Comunicaciones”**. Incluye un resumen estructurado, diagramas interactivos y un test dinámico con corrección y calificación.
 
+La interfaz está dividida en dos páginas: `index.html` contiene el resumen, las capas y los ejemplos prácticos; `test.html` contiene el selector y el módulo de evaluación.
+
 ## Uso local
 
 No requiere instalación ni proceso de compilación.

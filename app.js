@@ -138,8 +138,8 @@ let active=[];
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 $$('.tabs button').forEach(b=>b.addEventListener('click',()=>{$$('.tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');const m=modelCopy[b.dataset.model];$('#modelText').innerHTML=`<h4>${m.title}</h4><p>${m.body}</p><p><strong>Flujo:</strong> ${m.flow}</p>`}));
 $$('#osiStack button').forEach(b=>b.addEventListener('click',()=>{$$('#osiStack button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}));
-$('#themeToggle').addEventListener('click',()=>document.body.classList.toggle('dark'));
-$('#showTopics').addEventListener('click',()=>{$('#topicPicker').hidden=!$('#topicPicker').hidden});
+$('#themeToggle')?.addEventListener('click',()=>document.body.classList.toggle('dark'));
+$('#showTopics')?.addEventListener('click',()=>{$('#topicPicker').hidden=!$('#topicPicker').hidden});
 $$('[data-choice]').forEach(b=>b.addEventListener('click',()=>startQuiz(b.dataset.choice)));
 function sample(arr,n){return [...arr].sort(()=>Math.random()-.5).slice(0,n)}
 function startQuiz(choice){
@@ -155,7 +155,8 @@ function startQuiz(choice){
    const topicQs=questions.filter(q=>q.topic===choice); active=[...topicQs];
    const missing=['mc','tf','blank','open'].filter(t=>!active.some(q=>q.type===t)); missing.forEach(t=>active.push(sample(questions.filter(q=>q.type===t&&q.topic!==choice),1)[0]));
  }
- $('#testTitle').textContent=labels[choice]; $('#questionCount').textContent=active.length; $('#evaluacion').hidden=false; $('#results').hidden=true; $('#quizForm').hidden=false; renderQuestions(); $('#evaluacion').scrollIntoView({behavior:'smooth'});
+ if(!$('#evaluacion')){location.href=`test.html?tema=${choice}`;return}
+ $('#selector')?.setAttribute('hidden',''); $('#testTitle').textContent=labels[choice]; $('#questionCount').textContent=active.length; $('#evaluacion').hidden=false; $('#results').hidden=true; $('#quizForm').hidden=false; renderQuestions(); $('#evaluacion').scrollIntoView({behavior:'smooth'});
 }
 function renderQuestions(){
  $('#questions').innerHTML=active.map((q,i)=>`<article class="question-card"><div class="question-meta"><span>PREGUNTA ${String(i+1).padStart(2,'0')}</span><span>${q.label}</span></div><h3>${q.q}</h3>${inputFor(q,i)}</article>`).join('');
@@ -165,7 +166,9 @@ function inputFor(q,i){if(q.type==='mc'||q.type==='tf')return `<div class="optio
 function updateAnswered(){let n=0;active.forEach((q,i)=>{const fields=$$(`[name=q${i}]`);if(fields.some(f=>(f.type==='radio'&&f.checked)||(f.type!=='radio'&&f.value.trim())))n++});$('#answeredCount').textContent=n}
 const norm=s=>(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
 function check(q,i){const fields=$$(`[name=q${i}]`);if(q.type==='mc'||q.type==='tf'){const c=fields.find(f=>f.checked);return {ok:c&&Number(c.value)===q.answer,given:c?q.options[c.value]:'Sin respuesta',expected:q.options[q.answer]}}const val=fields[0].value;if(q.type==='blank')return {ok:q.answers.some(a=>norm(val)===norm(a)),given:val||'Sin respuesta',expected:q.answers[0]};const hits=q.keywords.filter(k=>norm(val).includes(norm(k)));return {ok:hits.length>=q.min,given:val||'Sin respuesta',expected:`Incluye al menos ${q.min} ideas clave: ${q.keywords.join(', ')}`}}
-$('#quizForm').addEventListener('submit',e=>{e.preventDefault();const checks=active.map(check);const score=checks.filter(x=>x.ok).length;const pct=Math.round(score/active.length*100);$('#quizForm').hidden=true;$('#results').hidden=false;$('#results').innerHTML=`<div class="results-panel"><p class="eyebrow">RESULTADO FINAL</p><div class="grade">${pct}<small>%</small></div><h2>${pct>=90?'Dominio excelente':pct>=70?'Buen progreso':pct>=50?'Base en construcción':'Conviene repasar el resumen'}</h2><p>Acertaste ${score} de ${active.length}. Las respuestas abiertas se califican por conceptos clave y admiten redacciones equivalentes.</p><div>${active.map((q,i)=>`<div class="feedback-item ${checks[i].ok?'correct':'incorrect'}"><b>${checks[i].ok?'✓ Correcta':'× Por revisar'} · ${i+1}. ${q.q}</b><p><strong>Tu respuesta:</strong> ${escapeHtml(checks[i].given)}</p><p><strong>Corrección:</strong> ${q.why}</p></div>`).join('')}</div><button class="secondary-button" onclick="location.reload()">Volver al resumen</button></div>`;$('#results').scrollIntoView({behavior:'smooth'})});
+$('#quizForm')?.addEventListener('submit',e=>{e.preventDefault();const checks=active.map(check);const score=checks.filter(x=>x.ok).length;const pct=Math.round(score/active.length*100);$('#quizForm').hidden=true;$('#results').hidden=false;$('#results').innerHTML=`<div class="results-panel"><p class="eyebrow">RESULTADO FINAL</p><div class="grade">${pct}<small>%</small></div><h2>${pct>=90?'Dominio excelente':pct>=70?'Buen progreso':pct>=50?'Base en construcción':'Conviene repasar el resumen'}</h2><p>Acertaste ${score} de ${active.length}. Las respuestas abiertas se califican por conceptos clave y admiten redacciones equivalentes.</p><div>${active.map((q,i)=>`<div class="feedback-item ${checks[i].ok?'correct':'incorrect'}"><b>${checks[i].ok?'✓ Correcta':'× Por revisar'} · ${i+1}. ${q.q}</b><p><strong>Tu respuesta:</strong> ${escapeHtml(checks[i].given)}</p><p><strong>Corrección:</strong> ${q.why}</p></div>`).join('')}</div><div class="choice-row"><a class="secondary-button" href="test.html">Elegir otro test</a><a class="secondary-button" href="index.html">Volver al resumen</a></div></div>`;$('#results').scrollIntoView({behavior:'smooth'})});
 function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
-window.addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;const pct=Math.max(0,Math.min(100,Math.round(scrollY/max*100)));$('#progressBar').style.width=pct+'%';$('#progressLabel').textContent=(scrollY>$('#checkpoint').offsetTop?'Evaluación':'Fundamentos')+' · '+pct+'%'});
-$('#bankCount').textContent=questions.length;
+window.addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;const pct=Math.max(0,Math.min(100,Math.round(scrollY/max*100)));if($('#progressBar'))$('#progressBar').style.width=pct+'%';if($('#progressLabel'))$('#progressLabel').textContent=(location.pathname.endsWith('test.html')?'Evaluación':'Fundamentos')+' · '+pct+'%'});
+if($('#bankCount'))$('#bankCount').textContent=questions.length;
+const requestedTopic=new URLSearchParams(location.search).get('tema');
+if(requestedTopic&&$('#evaluacion'))startQuiz(requestedTopic);

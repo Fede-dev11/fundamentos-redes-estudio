@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Test interactivo de Fundamentos de Redes de Comunicaciones." />
+  <title>RedLab · Test de Redes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">R</span><span>RED<span>LAB</span></span></a>
+    <nav class="page-tabs" aria-label="Secciones principales"><a href="index.html">Resumen</a><a class="active" href="test.html">Test</a></nav>
+    <div class="progress-wrap"><span id="progressLabel">Evaluación · 0%</span><div class="progress"><span id="progressBar"></span></div></div>
+    <button class="icon-button" id="themeToggle" aria-label="Cambiar tema">◐</button>
+  </header>
+  <main>
+    <section class="section test-landing" id="selector">
+      <a class="test-back" href="index.html#ejemplo-mensaje">← REPASAR ANTES DEL TEST</a>
+      <div class="checkpoint">
+        <p class="eyebrow">APARTADO 2 · EVALUACIÓN</p>
+        <h2>Elige cómo quieres comprobar lo aprendido.</h2>
+        <p>El test integral genera 30 preguntas y cubre los 12 bloques. Un test por tema usa todas las preguntas disponibles de ese bloque y conserva los cuatro formatos.</p>
+        <div class="choice-row"><button class="primary-button" data-choice="aleatorio">Test integral <span>↗</span></button></div>
+        <div class="topic-picker visible-picker">
+          <button data-choice="fundamentos">Telecomunicaciones y redes</button><button data-choice="aplicaciones">Aplicaciones y movilidad</button><button data-choice="sociales">Aspectos sociales y seguridad</button><button data-choice="clasificacion">Clasificación LAN, MAN y WAN</button><button data-choice="acceso_wan">Tecnologías WAN y acceso</button><button data-choice="interredes">Interredes e internetworking</button><button data-choice="topologias">Topologías y tipos de envío</button><button data-choice="modelos">Modelos OSI y TCP/IP</button><button data-choice="protocolos">Protocolos y estándares</button><button data-choice="encapsulamiento">Encapsulamiento</button><button data-choice="hardware">Hardware</button><button data-choice="servicios">Servicios CONS y CLNS</button>
+        </div>
+        <p class="bank-note"><strong id="bankCount">—</strong> preguntas disponibles.</p>
+      </div>
+    </section>
+    <section class="section test-section" id="evaluacion" hidden>
+      <div class="test-header"><div><p class="eyebrow">MÓDULO DE TEST Y EVALUACIÓN</p><h2 id="testTitle">Test</h2></div><div class="score-pill"><span id="answeredCount">0</span>/<span id="questionCount">0</span> respondidas</div></div>
+      <form id="quizForm" novalidate><div id="questions"></div><button class="primary-button submit-test" type="submit">Validar respuestas <span>→</span></button></form>
+      <div id="results" hidden></div>
+    </section>
+  </main>
+  <footer><span>REDLAB · 2026</span><p>114 preguntas basadas en el documento de estudio.</p><a href="index.html">VOLVER AL RESUMEN ↑</a></footer>
+  <script src="app.js"></script>
+</body>
+</html>
