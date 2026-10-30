@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Aplicación interactiva de estudio basada en Introducción: Fundamentos de Redes de Comunicaciones." />
+  <title>RedLab · Fundamentos de Redes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#inicio" aria-label="Ir al inicio"><span class="brand-mark">R</span><span>RED<span>LAB</span></span></a>
+    <div class="progress-wrap" aria-label="Progreso de estudio">
+      <span id="progressLabel">Fundamentos · 0%</span>
+      <div class="progress"><span id="progressBar"></span></div>
+    </div>
+    <button class="icon-button" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">◐</button>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-copy">
+        <p class="eyebrow">FUNDAMENTOS DE REDES · GUÍA INTERACTIVA</p>
+        <h1>De los <em>bits</em><br>al navegador.</h1>
+        <p class="hero-lead">Comprende cómo viaja la información, capa por capa, y comprueba lo aprendido con escenarios reales de red.</p>
+        <a class="primary-button" href="#fundamentos">Comenzar recorrido <span>↓</span></a>
+      </div>
+      <div class="hero-visual" aria-label="Animación del recorrido de un paquete por una red">
+        <div class="node client"><span>01</span><b>CLIENTE</b><small>192.168.1.10</small></div>
+        <div class="network-line line-a"><i></i></div>
+        <div class="node router"><span>03</span><b>ROUTER</b><small>Gateway</small></div>
+        <div class="network-line line-b"><i></i></div>
+        <div class="node server"><span>07</span><b>SERVIDOR</b><small>HTTP · 80</small></div>
+        <div class="packet packet-a">DATA</div><div class="packet packet-b">IP</div>
+        <p class="visual-note">Una solicitud web cruza capas, medios y dispositivos antes de volver como respuesta.</p>
+      </div>
+    </section>
+
+    <section class="section" id="fundamentos">
+      <div class="section-number">APARTADO 1</div>
+      <div class="section-heading">
+        <p class="eyebrow">RESUMEN DE FUNDAMENTOS</p>
+        <h2>El mapa antes<br>del viaje.</h2>
+        <p>Los modelos dividen una comunicación compleja en tareas pequeñas. Cada capa ofrece servicios a la superior y se comunica lógicamente con su capa par en el destino.</p>
+      </div>
+
+      <article class="model-card">
+        <div class="card-title"><span>01</span><div><p>MODELOS DE REFERENCIA</p><h3>OSI ↔ TCP/IP</h3></div></div>
+        <div class="model-grid">
+          <div class="osi-stack" id="osiStack">
+            <button data-layer="7"><span>7</span><b>Aplicación</b><small>HTTP · servicios al usuario</small></button>
+            <button data-layer="6"><span>6</span><b>Presentación</b><small>Formato · cifrado · compresión</small></button>
+            <button data-layer="5"><span>5</span><b>Sesión</b><small>Control del diálogo</small></button>
+            <button data-layer="4"><span>4</span><b>Transporte</b><small>TCP / UDP · extremo a extremo</small></button>
+            <button data-layer="3"><span>3</span><b>Red</b><small>IP · rutas y direcciones lógicas</small></button>
+            <button data-layer="2"><span>2</span><b>Enlace</b><small>Ethernet · MAC · acceso al medio</small></button>
+            <button data-layer="1"><span>1</span><b>Física</b><small>Señales · medios · bits</small></button>
+          </div>
+          <div class="model-explain">
+            <div class="tabs" role="tablist"><button class="active" data-model="osi">Modelo OSI</button><button data-model="tcpip">Modelo TCP/IP</button></div>
+            <div id="modelText">
+              <h4>Siete capas, una referencia universal</h4>
+              <p>ISO creó OSI para estandarizar la conexión de sistemas abiertos. Es un modelo conceptual: ayuda a diseñar, explicar y diagnosticar redes.</p>
+              <p><strong>Flujo:</strong> en el emisor los datos bajan de Aplicación a Física; en el receptor suben en sentido inverso.</p>
+            </div>
+            <div class="mapping" aria-label="Equivalencia entre modelos">
+              <span>OSI 7–5</span><i></i><b>Aplicación</b>
+              <span>OSI 4</span><i></i><b>Transporte</b>
+              <span>OSI 3</span><i></i><b>Internet</b>
+              <span>OSI 2–1</span><i></i><b>Acceso a red</b>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="content-block">
+        <div class="card-title"><span>02</span><div><p>PROTOCOLOS Y ESTÁNDARES</p><h3>Las reglas del intercambio</h3></div></div>
+        <div class="protocol-grid">
+          <div class="protocol-card accent"><code>TCP</code><h4>Fiabilidad</h4><p>Orientado a conexión. Numera, confirma y retransmite segmentos para entregar datos ordenados.</p><small>TRANSPORTE</small></div>
+          <div class="protocol-card"><code>UDP</code><h4>Rapidez</h4><p>Envía datagramas sin establecer conexión ni garantizar entrega; útil en voz, video o consultas breves.</p><small>TRANSPORTE</small></div>
+          <div class="protocol-card"><code>IP</code><h4>Enrutamiento</h4><p>Servicio no orientado a conexión. Direcciona y mueve datagramas entre redes; cada uno puede seguir otra ruta.</p><small>RED / INTERNET</small></div>
+          <div class="protocol-card"><code>HTTP</code><h4>La Web</h4><p>Protocolo de aplicación con el que clientes y servidores intercambian solicitudes y respuestas web.</p><small>APLICACIÓN</small></div>
+        </div>
+        <div class="standards-table">
+          <div class="table-head"><span>Estándar / tecnología</span><span>Ámbito</span><span>Idea clave del documento</span></div>
+          <div><b>IEEE 802.3 · Ethernet</b><span>LAN cableada</span><p>Red local de difusión o conmutada; trabaja con tramas y direcciones MAC.</p></div>
+          <div><b>IEEE 802.11 · Wi‑Fi</b><span>LAN inalámbrica</span><p>Acceso por radio para estaciones móviles o redes sin cableado.</p></div>
+          <div><b>IEEE 802.16 · WiMAX</b><span>MAN</span><p>Acceso inalámbrico metropolitano de mayor cobertura.</p></div>
+          <div><b>X.25</b><span>WAN</span><p>Red histórica orientada a conexión, basada en circuitos virtuales y enlaces telefónicos.</p></div>
+          <div><b>Frame Relay</b><span>WAN</span><p>Reemplazó a X.25; conmuta paquetes de longitud variable sobre una red pública.</p></div>
+          <div><b>ATM</b><span>WAN</span><p>Usa circuitos y trayectos virtuales; transmite celdas de tamaño fijo de 53 bytes.</p></div>
+          <div><b>Token Ring / FDDI</b><span>LAN</span><p>Alternativas históricas: IEEE 802.5 y anillo de fibra, respectivamente.</p></div>
+          <div><b>SONET · xDSL · Cable módem</b><span>Acceso / WAN</span><p>Transporte óptico y acceso de banda ancha sobre cobre telefónico o TV por cable.</p></div>
+        </div>
+      </article>
+
+      <article class="content-block encapsulation">
+        <div class="card-title"><span>03</span><div><p>ENCAPSULAMIENTO Y TIPOS DE DATOS</p><h3>El mismo mensaje, cuatro envolturas</h3></div></div>
+        <p class="wide-copy">Al bajar por la pila, cada capa agrega información de control —una cabecera y, a veces, un tráiler— a la unidad recibida. El destino elimina esas envolturas en orden inverso: <strong>desencapsulamiento</strong>.</p>
+        <div class="pdu-flow">
+          <div><span>04</span><b>SEGMENTO</b><small>Transporte · puertos TCP/UDP</small><i class="segment-shape"><u>TCP</u><u>DATOS</u></i></div>
+          <div><span>03</span><b>PAQUETE / DATAGRAMA</b><small>Red · direcciones IP</small><i class="packet-shape"><u>IP</u><u>SEGMENTO</u></i></div>
+          <div class="highlight"><span>02</span><b>TRAMA</b><small>Enlace · MAC y control de errores</small><i class="frame-shape"><u>MAC</u><u>PAQUETE</u><u>FCS</u></i></div>
+          <div><span>01</span><b>BITS</b><small>Física · señales 0 y 1</small><i class="bits-shape">011010010110</i></div>
+        </div>
+        <div class="callout"><b>¿Una trama o un conjunto de tramas?</b><p>Una <strong>trama</strong> es una sola unidad de capa 2 que transporta un paquete —o parte de él— por un enlace local. Un <strong>conjunto de tramas</strong> es solo una colección o secuencia de varias unidades; no constituye una PDU nueva ni reemplaza al segmento o al paquete. En cada salto, el router quita la trama recibida y crea otra para el siguiente enlace, mientras el paquete IP continúa su recorrido.</p></div>
+      </article>
+
+      <article class="content-block">
+        <div class="card-title"><span>04</span><div><p>HARDWARE DE RED</p><h3>Quién toca qué</h3></div></div>
+        <div class="device-map">
+          <div class="device"><span class="device-icon">⌁</span><div><b>Hub / repetidor</b><small>CAPA 1 · BITS</small></div><p>Regenera y replica señales hacia todos los puertos. No interpreta direcciones.</p></div>
+          <div class="device"><span class="device-icon">⇄</span><div><b>Switch / puente</b><small>CAPA 2 · TRAMAS</small></div><p>Lee direcciones MAC y reenvía tramas dentro de una LAN. El puente conecta segmentos; el switch es un puente multipuerto.</p></div>
+          <div class="device"><span class="device-icon">⌬</span><div><b>Router</b><small>CAPA 3 · PAQUETES</small></div><p>Interconecta redes, examina IP, elige la ruta y reencapsula el paquete en una trama nueva por cada salto.</p></div>
+          <div class="device"><span class="device-icon">◇</span><div><b>Gateway</b><small>CAPAS SUPERIORES</small></div><p>Traduce entre protocolos o aplicaciones diferentes y puede establecer comunicación entre sistemas heterogéneos.</p></div>
+        </div>
+      </article>
+
+      <article class="content-block topology-block">
+        <div class="card-title"><span>05</span><div><p>ESCALA, TOPOLOGÍA Y DESTINO</p><h3>La forma de la red importa</h3></div></div>
+        <div class="topology-layout">
+          <div class="mini-network" aria-label="Diagrama LAN conectada a WAN">
+            <div class="lan-zone"><b>LAN · broadcast</b><i class="pc p1">PC</i><i class="pc p2">PC</i><i class="switch-dot">SW</i><span class="wire w1"></span><span class="wire w2"></span></div>
+            <div class="wan-zone"><b>WAN · punto a punto</b><i class="r r1">R</i><i class="r r2">R</i><i class="r r3">R</i><span class="route rt1"></span><span class="route rt2"></span></div>
+          </div>
+          <div class="destination-list">
+            <p><b>LAN</b> área local, propiedad habitual del usuario; Ethernet o Wi‑Fi.</p>
+            <p><b>MAN</b> cubre una ciudad o zona metropolitana; el PDF cita WiMAX.</p>
+            <p><b>WAN</b> enlaza regiones mediante operadoras y enlaces punto a punto.</p>
+            <div class="chips"><span>UNICAST · uno a uno</span><span>MULTICAST · uno a un grupo</span><span>BROADCAST · uno a todos</span><span>ANYCAST · uno de varios</span></div>
+          </div>
+        </div>
+        <p class="footnote">Topologías descritas en el documento: estrella, anillo, árbol o estrella distribuida, malla completa, anillos interconectados y malla parcial.</p>
+      </article>
+
+      <div class="checkpoint" id="checkpoint">
+        <p class="eyebrow">RESUMEN COMPLETADO</p>
+        <h2>¿Deseas generar un Test Aleatorio sobre todo el PDF o prefieres elegir un Tema Específico <small>(ej. Protocolos y Estándares, Topologías, Modelo OSI, Hardware)</small>?</h2>
+        <div class="choice-row">
+          <button class="primary-button" data-choice="aleatorio">Test aleatorio <span>↗</span></button>
+          <button class="secondary-button" id="showTopics">Elegir tema <span>＋</span></button>
+        </div>
+        <div class="topic-picker" id="topicPicker" hidden>
+          <button data-choice="modelos">Modelos OSI y TCP/IP</button><button data-choice="protocolos">Protocolos y estándares</button><button data-choice="encapsulamiento">Encapsulamiento</button><button data-choice="hardware">Hardware</button><button data-choice="topologias">Topologías y tipos de envío</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section test-section" id="evaluacion" hidden>
+      <div class="section-number">APARTADO 2</div>
+      <div class="test-header"><div><p class="eyebrow">MÓDULO DE TEST Y EVALUACIÓN</p><h2 id="testTitle">Test aleatorio</h2></div><div class="score-pill"><span id="answeredCount">0</span>/<span id="questionCount">0</span> respondidas</div></div>
+      <form id="quizForm" novalidate><div id="questions"></div><button class="primary-button submit-test" type="submit">Validar respuestas <span>→</span></button></form>
+      <div id="results" hidden></div>
+    </section>
+  </main>
+
+  <footer><span>REDLAB · 2026</span><p>Basado en “Introducción — Fundamentos de Redes de Comunicaciones”.</p><a href="#inicio">VOLVER ARRIBA ↑</a></footer>
+  <script src="app.js"></script>
+</body>
+</html>
