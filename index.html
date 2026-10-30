@@ -92,8 +92,42 @@
         <div class="accuracy-note"><strong>Cómo leer esta tabla:</strong> OSI es un modelo conceptual. Algunos protocolos abarcan funciones de más de una capa; por ejemplo, TLS suele explicarse entre Aplicación y Presentación. La tabla los ubica donde su función resulta más fácil de estudiar.</div>
       </article>
 
+      <article class="content-block tcpip-guide" id="modelo-tcp-ip">
+        <div class="card-title"><span>01C</span><div><p>MODELO TCP/IP EN DETALLE</p><h3>La pila que hace funcionar Internet</h3></div></div>
+        <div class="tcpip-intro">
+          <p>TCP/IP no es solamente TCP más IP. Es una <strong>familia de protocolos</strong> organizada en capas. Cada capa resuelve una parte del envío y usa a la capa inferior. En el emisor la información baja por la pila y se encapsula; en el receptor sube y se desencapsula.</p>
+          <div><b>4 capas TCP/IP</b><span>Aplicación → Transporte → Internet → Acceso a red</span></div>
+        </div>
+        <div class="tcpip-stack">
+          <section class="tcp-app"><header><span>4</span><div><b>Aplicación</b><small>Equivale aproximadamente a OSI 7, 6 y 5</small></div></header><p>Permite que los programas del usuario utilicen la red. Incluye también las funciones de representación y sesión que OSI separa: formato de datos, cifrado, autenticación y mantenimiento del diálogo.</p><dl><dt>Protocolos</dt><dd><strong>HTTP/HTTPS</strong> para páginas web; <strong>DNS</strong> para traducir nombres a IP; <strong>SMTP/IMAP</strong> para correo; <strong>FTP</strong> para archivos; <strong>DHCP</strong> para obtener configuración de red.</dd><dt>Unidad</dt><dd>Datos o mensaje.</dd><dt>Ejemplo</dt><dd>El navegador crea <code>GET /index.html</code> y HTTPS puede cifrarlo mediante TLS.</dd></dl></section>
+          <section class="tcp-transport"><header><span>3</span><div><b>Transporte</b><small>Equivale a OSI 4</small></div></header><p>Comunica procesos de extremo a extremo. Usa <strong>puertos</strong> para entregar los datos a la aplicación correcta y puede dividir un mensaje grande en partes.</p><dl><dt>TCP</dt><dd>Orientado a conexión. Establece la comunicación, numera datos, confirma recepción, ordena y retransmite pérdidas. Prioriza fiabilidad.</dd><dt>UDP</dt><dd>No establece conexión ni garantiza entrega u orden. Reduce demora y sobrecarga; se usa cuando importa la rapidez.</dd><dt>Unidad</dt><dd>Segmento TCP o datagrama UDP.</dd></dl></section>
+          <section class="tcp-internet"><header><span>2</span><div><b>Internet</b><small>Equivale a OSI 3 · Red</small></div></header><p>Permite que la información atraviese varias redes. Agrega direcciones IP de origen y destino. Los routers examinan la IP destino y escogen el siguiente salto.</p><dl><dt>Protocolos</dt><dd><strong>IPv4/IPv6</strong> para direccionamiento y entrega; <strong>ICMP</strong> para mensajes de control y diagnóstico.</dd><dt>Servicio</dt><dd>IP es no orientado a conexión y de mejor esfuerzo: cada datagrama puede tomar otra ruta y no garantiza entrega.</dd><dt>Unidad</dt><dd>Paquete o datagrama IP.</dd></dl></section>
+          <section class="tcp-access"><header><span>1</span><div><b>Acceso a red</b><small>Equivale aproximadamente a OSI 2 y 1</small></div></header><p>Entrega el paquete por el enlace inmediato. Crea una trama con direcciones físicas y finalmente la convierte en señales eléctricas, luminosas o de radio.</p><dl><dt>Tecnologías</dt><dd><strong>Ethernet 802.3</strong>, <strong>Wi‑Fi 802.11</strong>, PPP y el medio físico.</dd><dt>Dispositivos</dt><dd>Tarjeta de red, switch y puente trabajan con tramas; hub y repetidor trabajan con señales o bits.</dd><dt>Unidad</dt><dd>Trama y, en el medio, bits.</dd></dl></section>
+        </div>
+        <div class="osi-compare">
+          <div><span>OSI</span><b>7 Aplicación<br>6 Presentación<br>5 Sesión</b></div><i>→</i><div><span>TCP/IP</span><b>Aplicación</b></div>
+          <div><span>OSI</span><b>4 Transporte</b></div><i>→</i><div><span>TCP/IP</span><b>Transporte</b></div>
+          <div><span>OSI</span><b>3 Red</b></div><i>→</i><div><span>TCP/IP</span><b>Internet</b></div>
+          <div><span>OSI</span><b>2 Enlace<br>1 Física</b></div><i>→</i><div><span>TCP/IP</span><b>Acceso a red</b></div>
+        </div>
+        <div class="tcpip-example">
+          <p class="eyebrow">EJEMPLO: ABRIR UNA PÁGINA WEB</p>
+          <ol>
+            <li><b>DNS</b> obtiene la dirección IP correspondiente al nombre del sitio.</li>
+            <li><b>HTTP/HTTPS</b> crea la solicitud web en la capa Aplicación.</li>
+            <li><b>TCP</b> establece la conexión, agrega puertos y forma segmentos.</li>
+            <li><b>IP</b> agrega las direcciones origen y destino para formar paquetes.</li>
+            <li><b>Ethernet o Wi‑Fi</b> coloca cada paquete en una trama para llegar al gateway.</li>
+            <li>La capa física transmite <b>bits</b>; cada router reemplaza la trama y reenvía el paquete.</li>
+            <li>El servidor desencapsula, procesa HTTP y devuelve la respuesta mediante la misma pila.</li>
+          </ol>
+          <div class="encapsulation-line"><span>HTTP</span><span>TCP + HTTP</span><span>IP + TCP + HTTP</span><span>TRAMA + IP + TCP + HTTP</span><span>011010…</span></div>
+        </div>
+        <div class="callout tcpip-key"><b>Idea clave</b><p><strong>TCP</strong> se ocupa de la comunicación fiable entre aplicaciones; <strong>IP</strong> se ocupa de llevar paquetes entre redes. TCP puede usar IP, pero IP también transporta otros protocolos. Por eso “TCP/IP” nombra a toda la arquitectura y no a un único protocolo.</p></div>
+      </article>
+
       <article class="content-block journey-block" id="ejemplo-mensaje">
-        <div class="card-title"><span>01C</span><div><p>EJEMPLO PRÁCTICO</p><h3>¿Qué pasa cuando envías “Hola”?</h3></div></div>
+        <div class="card-title"><span>01D</span><div><p>EJEMPLO PRÁCTICO</p><h3>¿Qué pasa cuando envías “Hola”?</h3></div></div>
         <div class="scenario"><div><span>ORIGEN</span><b>Ana · 192.168.1.10</b><small>Wi‑Fi · MAC AA:10</small></div><i>→</i><div><span>RED</span><b>Switch/AP → Router → Internet</b><small>varios enlaces y saltos</small></div><i>→</i><div><span>DESTINO</span><b>Luis · servidor de mensajería</b><small>IP 203.0.113.20</small></div></div>
         <ol class="journey-steps">
           <li><span>7</span><div><b>Aplicación crea el dato</b><p>Ana escribe “Hola”. La app añade información propia: usuario destinatario, conversación y contenido. Si fuera una página web, aquí intervendría HTTP/HTTPS.</p></div></li>
