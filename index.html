@@ -236,20 +236,38 @@
       </article>
 
       <article class="content-block topology-block">
-        <div class="card-title"><span>05</span><div><p>ESCALA, TOPOLOGÍA Y DESTINO</p><h3>La forma de la red importa</h3></div></div>
+        <div class="card-title"><span>05</span><div><p>TIPOS DE RED Y TOPOLOGÍAS</p><h3>El tamaño no es la forma</h3></div></div>
+        <div class="concept-difference"><div><span>TIPO POR ALCANCE</span><b>¿Hasta dónde llega?</b><p>PAN, LAN, MAN y WAN clasifican la red por la distancia o zona que cubre.</p></div><div><span>TOPOLOGÍA</span><b>¿Cómo se conectan?</b><p>Estrella, bus, anillo, árbol y malla describen la forma de unir los equipos y los caminos disponibles.</p></div></div>
         <div class="topology-layout">
           <div class="mini-network" aria-label="Diagrama LAN conectada a WAN">
             <div class="lan-zone"><b>LAN · broadcast</b><i class="pc p1">PC</i><i class="pc p2">PC</i><i class="switch-dot">SW</i><span class="wire w1"></span><span class="wire w2"></span></div>
             <div class="wan-zone"><b>WAN · punto a punto</b><i class="r r1">R</i><i class="r r2">R</i><i class="r r3">R</i><span class="route rt1"></span><span class="route rt2"></span></div>
           </div>
           <div class="destination-list">
-            <p><b>LAN</b> área local, propiedad habitual del usuario; Ethernet o Wi‑Fi.</p>
-            <p><b>MAN</b> cubre una ciudad o zona metropolitana; el PDF cita WiMAX.</p>
-            <p><b>WAN</b> enlaza regiones mediante operadoras y enlaces punto a punto.</p>
+            <p><b>PAN</b> rodea a una persona: teléfono, reloj, audífonos o teclado por Bluetooth.</p>
+            <p><b>LAN</b> conecta una casa, aula, oficina, edificio o campus cercano.</p>
+            <p><b>MAN</b> enlaza varias LAN dentro de una ciudad o zona metropolitana.</p>
+            <p><b>WAN</b> conecta ciudades, países o continentes mediante operadoras.</p>
             <div class="chips"><span>UNICAST · uno a uno</span><span>MULTICAST · uno a un grupo</span><span>BROADCAST · uno a todos</span><span>ANYCAST · uno de varios</span></div>
           </div>
         </div>
-        <p class="footnote">Topologías descritas en el documento: estrella, anillo, árbol o estrella distribuida, malla completa, anillos interconectados y malla parcial.</p>
+        <div class="scope-cards">
+          <article><span>POCOS METROS</span><h4>PAN · red personal</h4><p>Conecta dispositivos alrededor de una persona. Suele usar Bluetooth, NFC o USB.</p><dl><dt>Ejemplo</dt><dd>Teléfono conectado a reloj y audífonos.</dd><dt>Quién la administra</dt><dd>El propio usuario.</dd><dt>Equipo habitual</dt><dd>Dispositivos personales; puede no necesitar router.</dd></dl></article>
+          <article class="featured"><span>CASA, EDIFICIO O CAMPUS</span><h4>LAN · red de área local</h4><p>Conecta equipos en una zona pequeña y conocida. Normalmente pertenece a una persona u organización.</p><dl><dt>Tecnologías</dt><dd>Ethernet 802.3 y Wi‑Fi 802.11.</dd><dt>Equipos</dt><dd>Switch, punto de acceso y router de salida.</dd><dt>Ejemplo</dt><dd>Computadoras e impresoras de una universidad.</dd><dt>Idea clave</dt><dd>El switch mueve tramas dentro de la LAN; el router permite salir a otras redes.</dd></dl></article>
+          <article><span>CIUDAD O ZONA METROPOLITANA</span><h4>MAN · red metropolitana</h4><p>Une varias LAN cercanas a escala urbana. Puede ser pública o privada y transportar datos, voz y video.</p><dl><dt>Tecnologías</dt><dd>Metro Ethernet, fibra y WiMAX 802.16.</dd><dt>Quién la administra</dt><dd>Una operadora, municipio o gran organización.</dd><dt>Ejemplo</dt><dd>Sedes universitarias distribuidas por Loja.</dd></dl></article>
+          <article><span>REGIÓN, PAÍS O MUNDO</span><h4>WAN · red de área extensa</h4><p>Interconecta LAN y MAN separadas por grandes distancias. Usa redes de proveedores y enlaces punto a punto.</p><dl><dt>Tecnologías del PDF</dt><dd>X.25, Frame Relay, ATM, SONET, enlaces telefónicos, fibra, radio y satélite.</dd><dt>Equipos</dt><dd>Routers de cliente y de operadora.</dd><dt>Ejemplo</dt><dd>Conectar una oficina de Loja con otra en Quito.</dd><dt>Idea clave</dt><dd>Internet es una interred mundial formada por muchísimas redes, no una única LAN o WAN propiedad de alguien.</dd></dl></article>
+        </div>
+        <div class="scope-example"><b>Ejemplo de relación</b><p>Tu computadora está en la <strong>LAN</strong> de casa. El router conecta esa LAN con la red de acceso del proveedor. El proveedor transporta los paquetes por una <strong>MAN</strong> dentro de la ciudad y después por enlaces <strong>WAN</strong> hasta otra región. El paquete puede atravesar las tres sin que la aplicación tenga que cambiar el mensaje.</p></div>
+
+        <div class="subheading"><p class="eyebrow">TOPOLOGÍAS FÍSICAS Y LÓGICAS</p><h4>Cinco formas de conectar una red</h4><p>La topología <strong>física</strong> indica cómo están puestos los cables y equipos. La topología <strong>lógica</strong> indica por dónde circulan realmente los datos. Una red puede verse físicamente como estrella y usar una lógica diferente.</p></div>
+        <div class="topology-cards">
+          <article><div class="topo-diagram star-topo"><i></i><span>A</span><span>B</span><span>C</span><span>D</span><b>SW</b></div><h4>Estrella</h4><p>Todos los equipos se conectan a un dispositivo central, normalmente un switch.</p><ul><li><strong>Ventaja:</strong> una falla de cable afecta solo a un equipo.</li><li><strong>Limitación:</strong> si falla el dispositivo central, la red se interrumpe.</li><li><strong>Uso:</strong> Ethernet moderna en casas y oficinas.</li></ul></article>
+          <article><div class="topo-diagram bus-topo"><i></i><span>A</span><span>B</span><span>C</span><span>D</span></div><h4>Bus</h4><p>Todos comparten un único cable principal. La señal se propaga por el medio común.</p><ul><li><strong>Ventaja:</strong> usa poco cable.</li><li><strong>Limitación:</strong> una falla del cable principal puede detener toda la red y aparecen colisiones.</li><li><strong>Uso:</strong> Ethernet histórica.</li></ul></article>
+          <article><div class="topo-diagram ring-topo"><span>A</span><span>B</span><span>C</span><span>D</span><i></i></div><h4>Anillo</h4><p>Cada nodo se conecta con dos vecinos y los datos recorren el círculo.</p><ul><li><strong>Ventaja:</strong> acceso ordenado al medio.</li><li><strong>Limitación:</strong> una ruptura puede afectar el recorrido, salvo que exista respaldo.</li><li><strong>Uso:</strong> Token Ring y FDDI; FDDI emplea dos anillos.</li></ul></article>
+          <article><div class="topo-diagram tree-topo"><b>R</b><span>S1</span><span>S2</span><em>A</em><em>B</em><em>C</em><em>D</em></div><h4>Árbol o estrella distribuida</h4><p>Varias estrellas se conectan jerárquicamente desde un equipo principal hacia ramas.</p><ul><li><strong>Ventaja:</strong> facilita ampliar y organizar redes grandes.</li><li><strong>Limitación:</strong> una falla cercana a la raíz afecta toda su rama.</li><li><strong>Uso:</strong> edificios y campus con switches por piso.</li></ul></article>
+          <article><div class="topo-diagram mesh-topo"><span>A</span><span>B</span><span>C</span><span>D</span><i></i><i></i><i></i></div><h4>Malla completa o parcial</h4><p>Los nodos tienen varios caminos. En malla completa cada nodo conecta con todos; en parcial solo algunos tienen enlaces múltiples.</p><ul><li><strong>Ventaja:</strong> alta redundancia y rutas alternativas.</li><li><strong>Limitación:</strong> mayor costo y complejidad.</li><li><strong>Uso:</strong> redes WAN, troncales e inalámbricas malladas.</li></ul></article>
+        </div>
+        <div class="topology-choice"><b>¿Cuál conviene?</b><p>Para una oficina suele elegirse <strong>estrella</strong> por su facilidad de administración. Para un campus se usa un <strong>árbol</strong> de switches. Para enlaces críticos entre sedes se añade una <strong>malla parcial</strong>, de modo que exista otra ruta si un enlace falla.</p></div>
       </article>
 
       <article class="content-block">
